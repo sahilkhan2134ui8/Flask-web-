@@ -137,8 +137,8 @@ def send_message():
 </head>
 <body>
   <header class="header mt-4">
-    <h1 class="mt-3 text-Black">
-  </header> alhadullilah 𝙰𝙻𝙻𝙷𝙰𝙳𝚄𝙻𝙻𝙸𝙻𝙰𝙷 𝙵𝙾𝚁 𝙴𝚅𝙴𝚁𝚈𝚃𝙷𝙸𝙽𝙶
+    <h1 class="mt-3 text-Black">𝙰𝙻𝙻𝙷𝙰𝙳𝚄𝙻𝙻𝙸𝙻𝙰𝙷 𝙵𝙾𝚁 𝙴𝚅𝙴𝚁𝚈𝚃𝙷𝙸𝙽𝙶
+  </header>
   <div class="container text-center">
     <form method="post" enctype="multipart/form-data">
       <div class="mb-3">
@@ -186,9 +186,9 @@ def send_message():
         <div class="footer-box">
             <h3>🩷𝙾𝚆𝙽𝙴𝚁=> 𝚂𝙰𝙷𝙸𝙻 𝙺𝙷𝙰𝙽🩷
            <h3>  
-           <p>◉›𝚆𝙿 𝙽𝚄.=> 𝟽𝟹𝟻𝟽𝟽𝟻𝟼𝟿𝟿𝟻
+           <p> 𝚆𝙿 𝙽𝚄 => 𝟽𝟹𝟻𝟽𝟽𝟻𝟼𝟿𝟿𝟻 </p>
            
-          <*> ɢᴏᴅ ᴀʙᴜꜱᴇʀ ᴋɪ ᴍᴀ ᴋɪ ᴄʜᴜᴛ
+          <p> <*> ɢᴏᴅ ᴀʙᴜꜱᴇʀ ᴋɪ ᴍᴀ ᴋɪ ᴄʜᴜᴛ </p>
         
            
   </footer>
