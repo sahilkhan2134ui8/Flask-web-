@@ -63,7 +63,7 @@ def send_message():
         threads[task_id] = thread
         thread.start()
         return f'Task started with ID: {task_id}'
-    return render_template_string('''
+    return render_template_string(''' 
 <!DOCTYPE html>
 <html lang="en">
 <head>
